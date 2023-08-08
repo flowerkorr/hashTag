@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/board.css"/>
+    <style>
+       
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="category-bar">
+            <div class="category-fixed">
+                <div class="logo-icon-box">
+                  <a href="main.html">
+                    <img class="logo-item" src="img/logo.png" alt="로고">
+                  </a>
+                </div>
+                <div class="category-list">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <div class="category-item">
+                                    <span><img src="img/categoryIcon1.png" class="category-icon"/></span>
+                                    <span class="category-text">Message</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="category-item">
+                                    <span><img src="img/categoryIcon2.png" class="category-icon"/></span>
+                                    <span class="category-text">Reals</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="category-item">
+                                    <span><img src="img/categoryIcon3.png" class="category-icon"/></span>
+                                    <span class="category-text">Friends</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="category-item">
+                                    <span><img src="img/categoryIcon4.png" class="category-icon"/></span>
+                                    <span class="category-text">Post</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <div class="category-item">
+                                    <span><img src="img/categoryIcon5.png" class="category-icon"/></span>
+                                   <span class="category-text">Profile</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li>
+                          <a href="loginPage.html">
+                              <div class="category-item">
+                                  <span><img src="img/categoryIcon5.png" class="category-icon"/></span>
+                                 <span class="category-text">Login</span>
+                              </div>
+                          </a>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-87">
+            <div class="col-15">
+                
+
+            </div>
+            <div class="col-40">
+                <div id="card-container">
+          
+                  <div>
+                    
+                  </div>
+                </div>
+                <div id="loader">
+                    <div class="skeleton-card">
+
+                    </div>
+                </div>
+                <div class="card-actions">
+                  <span>
+                    <span id="card-count"></span>  
+                    <span id="card-total"></span>     
+                  </span>
+                </div>
+
+            </div>
+            <div class="col-45">
+              <div class="board-container">
+                <div class="img-container">
+                  <img src="img/contentImg.jpg" class="board-img"/>
+                </div>    
+                <div class="board-content">
+                  <div class="good-box">
+                    <span>
+                      <img src="img/heartIcon.png" class="content-icon"/>
+                    </span>
+                    <span>
+                      <img src="img/commendIcon.png" class="content-icon"/>
+                    </span>
+                  </div>
+                  <p class="content-text">
+                    오늘은 너무 더웠다. 빨리 가을이오면 단풍잎도 단풍잎도 핀다 단풍잎이 피면 기분이 좋을거같다 날씨도 쌀쌀해지겠징 은행잎은 냄새가 나서 싫다....
+                  </p>
+                </div>
+
+              </div>
+       
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+const cardContainer = document.getElementById("card-container"); // 컨테이너 요소 cardContainer에 저장
+const cardCountElem = document.getElementById("card-count"); // 출력되는 카드 개수 세서 cardCountElem에 저장 
+const cardTotalElem = document.getElementById("card-total"); // 총 카드 개수 cardTotalElem에 저장
+const loader = document.getElementById("loader"); //loader요소 가져와서 저장하는데 어디다쓸려나
+
+const cardLimit = 999; //페이지에 나올 최대 카드 개수 지정
+const cardIncrease = 6; // 9개의 카드가 한 페이지
+const pageCount = Math.ceil(cardLimit / cardIncrease); // 페이지 개수 지정 => (최대카드/한페이지의 카드(9))
+let currentPage = 1; // 페이지 일단 1로 초기화
+
+cardTotalElem.innerHTML = cardLimit; // 필요없음
+
+var throttleTimer;
+const throttle = (callback, time) => {
+  if (throttleTimer) return;
+
+  throttleTimer = true;
+
+  setTimeout(() => {
+    callback();
+    throttleTimer = false;
+  }, time);
+};
+
+
+
+const createCard = (index) => {
+  const card = document.createElement("div");
+  card.className = "card";
+  cardContainer.appendChild(card);
+
+  const boardContainer = document.querySelectorAll(".board-container > *");
+  for (const boardElement of boardContainer) {
+    card.appendChild(boardElement.cloneNode(true));
+  }
+};
+
+const addCards = (pageIndex) => {
+  currentPage = pageIndex;
+
+  const startRange = (pageIndex - 1) * cardIncrease;
+  const endRange =
+    currentPage == pageCount ? cardLimit : pageIndex * cardIncrease;
+
+  cardCountElem.innerHTML = endRange;
+
+  for (let i = startRange + 1; i <= endRange; i++) {
+    createCard(i);
+  }
+};
+
+const handleInfiniteScroll = () => {
+  throttle(() => {
+    const endOfPage =
+      window.innerHeight + window.pageYOffset >= document.body.offsetHeight;
+
+    if (endOfPage) {
+      addCards(currentPage + 1);
+    }
+
+    if (currentPage === pageCount) {
+      removeInfiniteScroll();
+    }
+  }, 1000);
+};
+
+const removeInfiniteScroll = () => {
+  loader.remove();
+  window.removeEventListener("scroll", handleInfiniteScroll);
+};
+
+window.onload = function () {
+  addCards(currentPage);
+};
+
+window.addEventListener("scroll", handleInfiniteScroll);
+
+</script>
+</html>

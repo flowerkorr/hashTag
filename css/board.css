@@ -1,0 +1,180 @@
+*{
+    margin:0;
+    padding:0;
+}
+html,body{
+    width:100%;
+    height:100%;
+}
+.container{
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: row;
+   
+}
+
+.category-bar{
+    width:18%;
+    height:100%;
+    border-right: 1px solid rgb(225, 224, 224);
+    
+    background-color: white;
+    
+}
+.col-87{
+    width:82%;
+    height:100%;
+    display:flex;
+    flex-direction: row;
+}
+.logo-icon-box{
+    width:100%;
+    height:10px;
+    margin:40px 20px;
+    text-align: start;
+    font-style: italic;
+    display: flex;
+}
+.col-45{ 
+    width:40%;
+    height:100%;
+   
+}
+.col-15{
+    width:20%;
+    height:100%;
+   
+}
+
+.col-40{
+    width:40%;
+    height:100%;
+  
+}
+.category-icon{
+    width:30px;
+    height:30px;
+    margin:auto 20px;
+}
+.category-item{
+    width:100%;
+    height:110px;
+    display: flex;
+    justify-content: start;
+    font-size: 23px;
+    font-style:italic;
+    align-items: center;
+    text-align:center;
+}
+
+.category-item:hover{
+    width:100%;
+    height:100px;
+    background-color: rgba(177, 175, 175, 0.4);
+    display: flex;
+    justify-content: start;
+    font-size: 23px;
+    font-style:italic;
+    border-radius: 10px;
+}
+a{
+    text-decoration: none;
+    color:black;
+}
+.category-fixed{
+    width:18%; height:100%; position:fixed;
+    border-right:0.7px solid rgb(215, 213, 213);
+}
+.logo-item{
+  position:relative;
+  width:180px;
+  height:190px;
+  top:-75px;
+  left:-20px;
+}
+
+/*-------------------------무한스크롤----------------------------------------*/
+#card-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    height: 75vh;
+    width: 100% ;
+    margin: 8px;
+    border-radius: 3px;
+    transition: all 2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border:1px solid rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+    
+  
+  #loader {
+    display: flex;
+  }
+  
+  @keyframes load {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  @media screen and (prefers-reduced-motion: reduce) {
+    .skeleton-card::after {
+      animation: none;
+    }
+  }
+
+  @media screen and (max-width:1000px){
+    .category-text,.logo-item{
+      display:none;
+    }
+  }
+  .board-container{
+    display:none;
+  }
+
+  .img-container{
+    width:80%;
+    height:70%;
+    border:1px solid rgba(0,0,0,0.6);
+    
+
+  }
+  .board-content{
+    width:80%;
+    height:20%;
+  
+  }
+  .board-img{
+    width:100%;
+    height:100%;
+  }
+  .good-box{
+    width:100%;
+    height:25%;
+    
+    border-bottom:1px solid rgba(0,0,0,0.3)
+  }
+  .content-icon{
+    width:8%;
+    height:100%;
+    margin:auto 5px;
+    cursor:pointer;
+  }
+  .content-text{
+    font-size: 13px;
+    font-weight: 500;
+    font-style: italic;
+  }
